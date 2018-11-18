@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors Game</title>
+</head>
+<body>
+  <div>
+    <h1>Rock Paper Scissors</h1>
+    <h3>Can you beat the machine?</h3>
+    <p>
+      To play press:
+      <p>
+        <strong>R</strong> - Rock
+        <strong>P</strong> - Paper
+        <strong>S</strong> - Scissors
+      </p>
+    </p>
+    <div id="game"></div>
+  </div>
+
+  <script type="text/javascript">
+    let wins = 0;
+    let ties = 0;
+    let losses = 0;
+
+    document.onkeyup = function(event) {
+      let choices = ['r', 'p', 's'];
+      let aiPick = choices[Math.floor(Math.random() * choices.length)];
+      let keyPress = event.key;
+      if (keyPress === 'r' || keyPress === 'p' || keyPress === 's') {
+        if (
+          keyPress === 'r' && aiPick === 's' ||
+          keyPress === 'p' && aiPick === 'r' ||
+          keyPress === 's' && aiPick === 'p'
+        ) {
+          wins++;
+        } else if (keyPress === aiPick) {
+          ties++;
+        } else {
+          losses++;
+        }
+      } else if (keyPress === 'Meta') {
+        return;
+      } else {
+        alert(`wrong key pressed: ${event.key}`);
+      }
+
+      let choicesInWords = {
+        r: 'Rock',
+        p: 'Paper',
+        s: 'Scissors'
+      };
+
+      let html =
+      `
+      <p>Wins: ${wins}</p>
+      <p>Losses: ${losses}</p>
+      <p>Ties: ${ties}</p>
+      <p>My Pick: ${choicesInWords[keyPress]}</p>
+      <p>AI Pick: ${choicesInWords[aiPick]}</p>
+      `
+      document.getElementById('game').innerHTML = html;
+    };
+  </script>
+</body>
+</html>
